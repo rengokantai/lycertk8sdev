@@ -33,3 +33,12 @@ arch, slave
 - kubelet
 - kube proxy
 - pod (container)
+
+### 
+```
+cat << EOF > /etc/docker/daemon.json
+{
+  "exec-opts":["native.cgroupdriver=systemd"]
+}
+EOF
+```

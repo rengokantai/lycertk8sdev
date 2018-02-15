@@ -50,4 +50,10 @@ EOF
 ```
 ```
 apt update
+apt install -y kubelet kubeadm kubectl
+```
+
+start
+```
+kubeadm init --pod-network-cidr=10.244.0.0/16
 ```

@@ -21,3 +21,15 @@ kubeadm join --token x master:port --discovery-token-ca-cert-hash sha256:
 two kinds of name:
 - kube-proxy
 - kube-flannel
+
+###
+arch, master
+- kube-apiserver, use etcd a kv pair to store data
+- kube-scheduler. which node to response the request
+- cloud-controller-manager. persistent storage, route, netorking
+- kube-controller-manager
+
+arch, slave
+- kubelet
+- kube proxy
+- pod (container)

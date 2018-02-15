@@ -14,3 +14,10 @@ get flannel map.
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
 kubectl get pods --all-namespaces
 ```
+slave:
+```
+kubeadm join --token x master:port --discovery-token-ca-cert-hash sha256:
+```
+two kinds of name:
+- kube-proxy
+- kube-flannel

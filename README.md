@@ -57,3 +57,11 @@ start
 ```
 kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
+
+
+Node controller
+- Assign CIDR block to a newly registered node
+- keeps track of the nodes
+- monitors the node health
+- evicts pods from unhealthy nodes
+- can taint nodes based on current conditions in more recent versions

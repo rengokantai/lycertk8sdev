@@ -149,12 +149,63 @@ Worker Nodes
 - 30000-32767 Nodeport services
 
 
+### Service Networking
+```
+kubectl expose deployment webhead --type="NodePort" --port 80
+```
+```
+kubectl get services
+curl localhost 32516
+```
 
+### Ingress
+note
+- Ingress is an API object that manages external access to the services in a cluster,usually HTTP.
+- It can provide load balancing, SSL termination and name-based virtual hosting
+- An Edge router that enforces the firewall policy for your cluster
 
+service
+- a service is a kubernetes service that identifies a set of pods using label selectors, unless mentioned otherwise,
+services are assumed to have virtual IPs only routable within the cluster network
 
+```
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+spec:
+  backend:
+    serviceName:testsvc
+    servicePort:80
 
-
-
+```
+then check
+```
+kubectl create -f yml
+kubectl get ing
+```
+more path
+```
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test
+  annotations:
+   ingress.kubernetes.io/rewrite-target:/
+spec:
+  rules:
+  - host: yidi.me
+    http:
+      paths:
+      - path: /service1
+        backend:
+          serviceName:s1
+          servicePort:80
+      - path: /service2
+        backend:
+          serviceName:s2
+          servicePort:80
+```
 
 ## Storage
 ### Persist Volumes, Part1

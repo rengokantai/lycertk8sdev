@@ -249,7 +249,39 @@ Other ways to expose a service that doesnot directly involve the ingress resourc
 - User a Port Proxy
 
 
+### Deploying a Load Balancer
+yml
+```
+kind: Service
+apiVersion: v1
+metadata:
+  name: lb
+spec:
+  selector:
+    app: la-lb
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9376
+  clusterIP: 10.0.1.1
+  loadBalancerIP:
+  type: loadBalancer
+```
 
+### Configure and Use Cluster DNS
+```
+kubectl get pods -n kube-system
+```
+check nslookup
+```
+kubectl exec -it box -- nslookup kubernetes
+```
+
+```
+kubectl expose deployment dns-target
+```
+
+### Container Network Interface(CNI)
 
 
 

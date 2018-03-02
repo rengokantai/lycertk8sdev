@@ -65,3 +65,23 @@ Node controller
 - monitors the node health
 - evicts pods from unhealthy nodes
 - can taint nodes based on current conditions in more recent versions
+
+
+
+
+
+
+
+
+
+
+
+### Securing Images
+note
+- Regularly apply security updates to your environment
+- Dont run tools like apt-update in containers
+- Use rolling updates
+- Ensure only authorized images are used in your environment
+- Use private registries to store approved images
+- CI pipeline should be ensure that only vetted code is used for building images
+

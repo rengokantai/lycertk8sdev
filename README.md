@@ -108,3 +108,19 @@ spec:
     securityContext:
       allowPrivateEscalation: false
 ```
+```
+kubectl create -f security.yml
+kubectl get pods -o wide
+kubectl exec -it security-context-pod -- sh
+ps aux
+cd /data/demo
+exit
+kubectl delete -f security.yml
+```
+but if we set
+```
+    securityContext:
+      runAsUser: 1000
+      allowPrivateEscalation: false
+```
+then the container will run as user 2000

@@ -66,6 +66,65 @@ Node controller
 - evicts pods from unhealthy nodes
 - can taint nodes based on current conditions in more recent versions
 
+
+
+
+
+## Logging and Monitoring
+### Monitoring Cluster and Application Components
+
+Monitoring
+- Grafana with InfluxDB
+- Heapster is setup to use this storage backend by default on most Kubernetes clusters.
+- InfluxDB and Grafana run in Pods
+- The pod exposes itself as a Kubernetes service which is how Heapster then discover it
+
+
+
+### Managing Logs
+```
+kubectl get pods --all-namespaces
+```
+or
+```
+cd /var/log/pods
+```
+
+## Cluster Maintenance
+### Upgrading Kubernetes Components
+master:
+```
+apt upgrade kubeadm
+kubeadm upgrade plan
+kubeadm upgrade apply v1.9.1
+```
+check deploy
+```
+kubectl get deployments
+kubectl drain host1 --ignore-daemonsets  //clear pods,evict to another node
+apt update
+kubectl uncordon host1
+kubectl drain host2 --ignore-daemonsets 
+```
+host2:
+```
+apt update && apt upgrade kubelet
+```
+host1(master)
+```
+kubectl uncordon host2 --ignore-daemonsets 
+```
+
+
+
+
+
+
+
+
+
+
+
 ## Storage
 ### Persist Volumes, Part1
 kubernetes and persistent volumes
@@ -116,6 +175,15 @@ spec:
      emptyDir: {}
 ```
 
+### Persistent Volumes, Part 2
+local
+- Alpha, requires "PersistentLocalVolumes" and "VolumeScheduling" feature gates
+- Allows local mounted storage to be mounted to a pod
+- Statically created PersistentVolume
+- Kubernete is aware of the volume's node constraints
+- Must be on the node
+- Not suitable for all applications
+- 1.9+ Volume binding can be dealyed until pod scheduling
 
 
 

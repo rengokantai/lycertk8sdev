@@ -97,7 +97,24 @@ note
 - Pod removed -> volume removed
 - Stored on node's local medium
 - Optional - set emptyDir.medium = Memory for RAM based tmpfs
-  
+
+sample.yml
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test
+spec:
+  containers:
+  - image: k8s.gcr.io/test-sebserver
+    name: test-container
+    volumeMounts:
+    - mountPath: /cache
+      name: cache-volume
+  volumes:
+  - name: cache-volume
+     emptyDir: {}
+```
 
 
 

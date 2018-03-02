@@ -207,6 +207,53 @@ spec:
           servicePort:80
 ```
 
+#### How to secure an Ingress
+note
+- Specify secret
+  - TLS
+  - Certificate
+- Port 443
+- Multiple hosts are multiplexed on the same port by hostnames specified through the SNI TLS extension
+- The TLS secret must contain keys named tls.crt and tls.key that contain the certificate and private key to use for TLS
+
+#### example
+key:
+```
+apiVersion: v1
+data:
+  tls.crt: base64xx
+  tls.key: xx
+kind: secret
+metadata:
+  name: supersecret
+  namespace: default
+type: opaque
+```
+  
+```
+apiVersion: extension/v1beta1
+kind: Ingress
+metadata:
+  name: no-rules
+spec:
+  tls:
+  - secretName: supersecret
+backend:
+  serviceName: s1
+  servicePort: 80
+```
+
+Other ways to expose a service that doesnot directly involve the ingress resource:
+- Use Service.Type=LoadBalancer
+- Use Service.Type=NodePort
+- User a Port Proxy
+
+
+
+
+
+
+
 ## Storage
 ### Persist Volumes, Part1
 kubernetes and persistent volumes

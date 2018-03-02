@@ -85,3 +85,26 @@ note
 - Use private registries to store approved images
 - CI pipeline should be ensure that only vetted code is used for building images
 
+### Defining Security Contexts
+security.yml
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: security-context-pod
+spec:
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 2000
+  volumes:
+  - name: ke
+    emptyDir: {}
+  containers:
+  - name: sample
+    image: gcr.io/google-samples/node-hello:1.0
+    volumeMounts:
+    - name: ke
+      mountPath: /data/demo
+    securityContext:
+      allowPrivateEscalation: false
+```

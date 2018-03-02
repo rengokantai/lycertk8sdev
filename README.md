@@ -66,7 +66,38 @@ Node controller
 - evicts pods from unhealthy nodes
 - can taint nodes based on current conditions in more recent versions
 
-
+## Storage
+### Persist Volumes, Part1
+kubernetes and persistent volumes
+- native pod storages is ephemeral - like a pod
+- what happens when a container crashes
+  - kubelet restarts it(possibly on another node)
+  - File system is re-created from image
+  - Ephemeral files are gone
+- Docker Volumes
+  - Directory on disk
+  - Possibly on other container
+  - New Volume Drivers
+- k8s volumes
+  - same lifetime as its pod
+  - Data preserved across container restarts
+  - Pod goes away ->volume goes away
+  - Directory with data
+  - Accessible to containers in a pod
+  - Implementation details determined by volume types
+  
+  
+###### 08:10
+note
+- Created when a pod is assigned to a node
+- Exists while pod runs on a paticular node
+- Initially empty
+- Multiple containers can read/write same volume
+- Volume can be mounted per container -- same or different mount points
+- Pod removed -> volume removed
+- Stored on node's local medium
+- Optional - set emptyDir.medium = Memory for RAM based tmpfs
+  
 
 
 
@@ -124,3 +155,11 @@ but if we set
       allowPrivateEscalation: false
 ```
 then the container will run as user 2000
+
+
+### Troubleshooting in Kubernetes
+```
+kubectl get nodes -o wide
+kubectl describe node hostname
+kubectl logs counter
+```

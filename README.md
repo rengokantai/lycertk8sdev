@@ -114,8 +114,39 @@ host1(master)
 ```
 kubectl uncordon host2 --ignore-daemonsets 
 ```
+### Upgrading the Underlying Operating System(s)
+```
+kubectl drain h4 --ignore-daemonsets
+kubectl delete node h4
+```
 
+token command
+host1:
+```
+kubeadm token list
+kubeadm token generate
+kubeadm token create 123.456789 --ttl 3h --print-join-command
+```
+join master node:(copy the previous command)
+```
+kubeadm join --token 123.456 master:6443 --discovery-token-ca-cert-hash sha256:1234
+```
 
+## Networking
+### Node Networking Configuration
+#### Inbound Node Port Req
+Master Node(s):
+- 6443: k8s api server
+- 2379-2380: etcd server client API
+- 10250: kubelet API
+- 10251: kube-scheduler
+- 10252: kube-controller-manager
+- 10255: read-only kubelet API
+
+Worker Nodes
+- 10250: Kubelet API
+- 10255: Read-only Kubelet API
+- 30000-32767 Nodeport services
 
 
 
